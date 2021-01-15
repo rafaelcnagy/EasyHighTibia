@@ -1,3 +1,10 @@
+selenium/
+chromedriver.exe
+config.ini
+*.log
+.idea/
+poetry.lock
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

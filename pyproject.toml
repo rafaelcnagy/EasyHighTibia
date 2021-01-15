@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "easyhigh"
+version = "0.1.0"
+description = ""
+authors = ["rafaelcnagy <rafaelcnagy@hotmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+selenium = "^3.141.0"
+requests = "^2.25.1"
+parsel = "^1.6.0"
+configparser = "^5.0.1"
+
+[tool.poetry.dev-dependencies]
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
