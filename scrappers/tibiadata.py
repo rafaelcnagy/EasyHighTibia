@@ -7,5 +7,5 @@ def search_char(name):
     r = requests.get(f'https://api.tibiadata.com/v2/characters/{name}.json')
     json = r.json()
 
-    char = Character(json['characters']['data'])
+    char = Character(name, json['characters']['data'])
     return char

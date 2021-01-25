@@ -2,8 +2,8 @@ from datetime import datetime
 
 
 class Character:
-    def __init__(self, json):
-        self.name = json['name']
+    def __init__(self, name, json):
+        self.name = name
         self.vocation = json['vocation']
         self.world = json['world']
         self.account_status = json['account_status']
