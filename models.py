@@ -8,7 +8,12 @@ class Character:
         self.world = json['world']
         self.account_status = json['account_status']
         self.guild = json['guild']['name'] if 'guild' in json else None
-        self.last_login = datetime.strptime(json['last_login'][0], '%Y-%m-%d %H:%M:%S.%f')
+
+        self.traded = False
+        self.trade_info = None
+
+        self.last_login = datetime.strptime(json['last_login'][0]['date'], '%Y-%m-%d %H:%M:%S.%f')
+        self.online_time = None
 
         self.ranking_position = 0
         self.points = 0

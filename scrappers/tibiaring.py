@@ -41,24 +41,34 @@ def search_char(char: Character, driver):
     except Exception as e:
         pass
 
-    if driver.find_elements_by_xpath('//div[@id="gworld"]'):
-        row = driver.find_element_by_xpath(f'//div[@id="gworld"]//tr[td[2]="{name}"]')
-        char.ranking_position = row.find_element_by_xpath('./td[1]').text
-        char.points = row.find_element_by_xpath('./td[3]').text
+    html = driver.page_source
+    sel = Selector(html)
 
-    if driver.find_elements_by_xpath('//*[contains(@class, "table chartable")]'):
-        html = driver.page_source
-        char.kills = get_kills(html, name)
-        char.deaths = get_deaths(html, name)
+    if sel.xpath('//div[@id="gworld"]'):
+        row = sel.xpath(f'//div[@id="gworld"]//tr[td[2]="{name}"]')
+        char.ranking_position = row.xpath('./td[1]/text()').extract_first()
+        char.points = row.xpath('./td[3]/text()').extract_first()
+
+    if sel.xpath('//div[@id="mtChar"]/div[2]/text()'):
+        char.traded = True
+        char.trade_info = sel.xpath('//div[@id="mtChar"]/div[2]/text()').extract_first()
+
+    if sel.xpath('//*[contains(@class, "table chartable")]'):
+        char.kills = get_kills(sel, name)
+        char.deaths = get_deaths(sel, name)
 
     return char
 
 
 def initialize_driver():
-    chrome_options = Options()
-    chrome_options.add_argument("user-data-dir=selenium")
+    try:
+        chrome_options = Options()
+        chrome_options.add_argument("user-data-dir=selenium")
 
-    driver = webdriver.Chrome(chrome_options=chrome_options)
+        driver = webdriver.Chrome(chrome_options=chrome_options)
+    except Exception as e:
+        driver = webdriver.Chrome()
+
     driver.get('https://www.tibiaring.com')
 
     if driver.find_elements_by_xpath('//a[@class="LinkHot b" and text()="Login"]'):
@@ -66,8 +76,8 @@ def initialize_driver():
     return driver
 
 
-def get_kills(html, name):
-    table = Selector(html).xpath('//*[contains(@class, "table chartable")]')
+def get_kills(sel, name):
+    table = sel.xpath('//*[contains(@class, "table chartable")]')
 
     kills = list()
     target_column_index = get_column_index(table)
@@ -100,8 +110,8 @@ def get_kills(html, name):
     return kills
 
 
-def get_deaths(html, name):
-    table = Selector(html).xpath('//*[contains(@class, "table chartable")]')
+def get_deaths(sel, name):
+    table = sel.xpath('//*[contains(@class, "table chartable")]')
 
     deaths = list()
     last_death = None
