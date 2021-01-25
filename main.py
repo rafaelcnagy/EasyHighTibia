@@ -11,7 +11,8 @@ app = Flask(__name__)
 def search_route():
     ts_description = request.args.get('description', '')
     if ts_description:
-        return search(ts_description)
+        chars = search(ts_description)
+        return render_template('result.html', chars=chars)
     else:
         return render_template('search.html')
 
