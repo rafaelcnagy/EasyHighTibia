@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Easy High</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-    <h1>Easy High, por Nagy</h1>
-    <div class="topnav">
-    <form class="search" action="search">
-      <input type="text" placeholder="Cole a descrição aqui." name="description">
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Easy High{% endblock %}</h1>
+  <p class="credit">feito por Nagy</p>
+{% endblock %}
+
+{% block content %}
+    <div class="search">
+        <form action="search">
+          <input type="text" placeholder="Cole a descrição aqui." name="description">
+          <button class="button" type="submit">Buscar</button>
+        </form>
     </div>
-</body>
-</html>
+
+{% endblock %}

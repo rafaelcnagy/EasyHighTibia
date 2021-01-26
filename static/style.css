@@ -1,37 +1,46 @@
 * {
-  box-sizing: border-box;
+  background-color: LightGray;
+  font-family: "Trebuchet MS", sans-serif;
 }
 
-/* Style the search field */
-form.search input[type=text] {
-  padding: 10px;
-  font-size: 17px;
-  border: 1px solid grey;
-  float: left;
-  width: 80%;
-  background: #f1f1f1;
+h1 {
+  text-align: center;
+  font-size: 44px;
+  margin: 3%;
 }
 
-/* Style the submit button */
-form.search button {
-  float: left;
-  width: 20%;
-  padding: 10px;
-  background: #2196F3;
+p.credit {
+  text-align: center;
+  font-size: 12px;
+  margin-top: -2%;
+  margin-bottom: 5%;
+}
+
+form{
+  text-align: center;
+}
+
+input[type=text] {
+  width: 70%;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+}
+
+.button {
+  width: 10%;
+  background-color: #3e8e41;
+  border: none;
+  border-radius: 6px;
   color: white;
-  font-size: 17px;
-  border: 1px solid grey;
-  border-left: none; /* Prevent double borders */
-  cursor: pointer;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
-form.search button:hover {
-  background: #0b7dda;
-}
-
-/* Clear floats */
-form.search::after {
-  content: "";
-  clear: both;
-  display: table;
+.button:hover {
+  background-color: green;
 }
