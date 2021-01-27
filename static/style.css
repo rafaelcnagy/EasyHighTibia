@@ -1,6 +1,9 @@
 * {
-  background-color: LightGray;
   font-family: "Trebuchet MS", sans-serif;
+}
+
+body{
+  background-color: LightGray;
 }
 
 h1 {
@@ -17,24 +20,28 @@ p.credit {
 }
 
 form{
-  text-align: center;
+  width: 80%;
+  margin: 10%;
+  display: flex;
 }
 
 input[type=text] {
-  width: 70%;
-  padding: 16px 20px;
+  width: 80%;
+  padding: 1% 2%;
   border: none;
-  border-radius: 4px;
+  border-radius: 10rem;
   background-color: #f1f1f1;
+  font-size: 15px;
+  margin-right: 1%;
 }
 
 .button {
-  width: 10%;
+  width: 20%;
   background-color: #3e8e41;
   border: none;
-  border-radius: 6px;
+  border-radius: 10rem;
   color: white;
-  padding: 15px 32px;
+  padding: 1% 2%;
   text-align: center;
   text-decoration: none;
   display: inline-block;
