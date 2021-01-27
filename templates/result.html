@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>Easy High</h1>
+  <p class="credit">feito por Nagy</p>
+{% endblock %}
+
+{% block content %}
+    {% for char in chars %}
+        <div class="char-container">
+            <div class="char-line">
+                <div class="char-line">
+                    <h2 class="char-info" style="padding-right: 10px">{{ char.name }}</h2>
+                    <p class="char-info">{{ char.level }}</p>
+                </div>
+                <p class="char-info">{{ char.vocation }}</p>
+                <p class="char-info">{{ char.world }}</p>
+            </div>
+
+            {% if char.traded %}
+                <div class="char-line">
+                    <p class="char-warning">{{ char.trade_info }}</p>
+                </div>
+            {% endif %}
+
+            <div class="char-line">
+                <p class="char-info">Último login: {{ char.last_login }}</p>
+                <p class="char-info">Guild: {{ char.guild }}</p>
+                <p class="char-info">{{ char.account_status }}</p>
+            </div>
+
+            <div class="char-line">
+                <p class="char-info">Tempo online: {{ char.online_time }}</p>
+                {% if char.points != 0 %}
+                    <p class="char-info">Pontos tibiaring: {{ char.points }}</p>
+                    <p class="char-info">Posição tibiaring: {{ char.ranking_position }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
