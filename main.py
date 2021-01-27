@@ -30,7 +30,7 @@ def search(ts_description):
 
     for char_name in char_name_list:
         char = tibiadata.search_char(char_name)
-        char = guildstats.search_date(char, driver)
+        char = guildstats.search_char(char)
         char = tibiaring.search_char(char, driver)
         char_list.append(char)
 
