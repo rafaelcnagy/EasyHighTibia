@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>Easy High</h1>
-  <p class="credit">feito por Nagy</p>
+    <h1><a class="invisible-link" href="/">Easy High</a></h1>
+    <p class="credit">feito por Nagy</p>
 {% endblock %}
 
 {% block content %}
@@ -44,9 +44,9 @@
                 <div class="char-frags-container">
 
                     <div class="char-line">
-                        <p class="char-info">Período: {{ presence.frags[0].date.strftime('%d/%m/%Y %H:%M') }} - {{ presence.frags[-1].date.strftime('%d/%m/%Y %H:%M') }}</p>
-                        <p class="char-info">{{ presence.qtd_kills }} kills</p>
-                        <p class="char-info">{{ presence.qtd_deaths }} mortes</p>
+                        <p class="frag-info">{{ presence.qtd_kills }} kills</p>
+                        <p class="frag-info">{{ presence.qtd_deaths }} mortes</p>
+                        <p class="frag-info">{{ presence.frags[0].date.strftime('%d/%m/%Y %H:%M') }} - {{ presence.frags[-1].date.strftime('%d/%m/%Y %H:%M') }}</p>
                     </div>
                     <div>
                         {% for frag in presence.frags %}

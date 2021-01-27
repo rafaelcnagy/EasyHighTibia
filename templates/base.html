@@ -1,13 +1,16 @@
 <!doctype html>
-<title>EasyHigh</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+    <title>EasyHigh</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
 
-<header>
-    {% block header %}{% endblock %}
-</header>
+    {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
 
-{% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-{% endfor %}
-
-{% block content %}{% endblock %}
+    {% block content %}{% endblock %}
+</body>

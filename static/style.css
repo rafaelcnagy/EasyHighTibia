@@ -90,13 +90,16 @@ input[type=text] {
 .char-death {
   background-color: indianred;
   width: -moz-available;
-  margin: 0
+  margin: 0;
+  padding-inline: 1%;
 }
 
 .char-kill {
   background-color: yellowgreen;
   width: -moz-available;
-  margin: 0
+  margin: 0;
+  padding-inline: 1%;
+
 }
 
 .frag-line {
@@ -104,5 +107,14 @@ input[type=text] {
   justify-content: space-between;
   align-items: baseline;
   margin: 0;
-  padding-inline: 0.1%;
+}
+
+.frag-info {
+  font-size: 20px;
+}
+
+.invisible-link{
+  cursor: text;
+  text-decoration: none;
+  color: black;
 }
