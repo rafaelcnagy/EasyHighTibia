@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 from scrappers import tibiaring, tibiadata, guildstats
 from scrappers.tibiaring import initialize_driver
-from utils import split_description
+from utils import split_description, process_presences
 
 app = Flask(__name__)
 
@@ -32,6 +32,7 @@ def search(ts_description):
         char = tibiadata.search_char(char_name)
         char = guildstats.search_char(char)
         char = tibiaring.search_char(char, driver)
+        char = process_presences(char)
         char_list.append(char)
 
     driver.close()

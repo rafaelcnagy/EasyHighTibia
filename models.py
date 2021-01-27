@@ -20,14 +20,17 @@ class Character:
         self.points = 0
         self.kills = list()
         self.deaths = list()
+        self.frags = list()
+        self.presences = list()
 
 
 class Frag:
-    def __init__(self, date, target_name, target_level, frag_type):
+    def __init__(self, date, target_name, target_level, frag_type, is_kill):
         self.date = date
         self.frag_type = frag_type
         self.target = SimpleCharacter(target_name, target_level)
         self.killers = list()
+        self.is_kill = is_kill
 
     def add_killer(self, killer_name, killer_level):
         self.killers.append(SimpleCharacter(killer_name, killer_level))
@@ -37,3 +40,21 @@ class SimpleCharacter:
     def __init__(self, name, level):
         self.name = name
         self.level = level
+
+
+class Presence:
+    def __init__(self, first_frag=None):
+        self.frags = list()
+        self.qtd_deaths = 0
+        self.qtd_kills = 0
+
+        if first_frag:
+            self.add_frag(first_frag)
+
+    def add_frag(self, frag):
+        self.frags.append(frag)
+        if frag.is_kill:
+            self.qtd_kills = self.qtd_kills + 1
+        else:
+            self.qtd_deaths = self.qtd_deaths + 1
+

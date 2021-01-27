@@ -57,6 +57,10 @@ def search_char(char: Character, driver):
         char.kills = get_kills(sel, name)
         char.deaths = get_deaths(sel, name)
 
+    char.frags.extend(char.kills)
+    char.frags.extend(char.deaths)
+    char.frags.sort(key=lambda x: x.date, reverse=True)
+
     return char
 
 
@@ -84,7 +88,7 @@ def get_kills(sel, name):
 
     for row in table.xpath(f'.//tr[td[{target_column_index}]/a/text()="{name}"]'):
         date = row.xpath(".//td[1]/text()").extract_first()
-        target_name = row.xpath(".//td[2]/text()").extract_first()
+        target_name = row.xpath(".//td[2]//text()").extract_first()
         target_level = row.xpath(".//td[3]/text()").extract_first()
         char_level = row.xpath(f".//td[{target_column_index+1}]/text()").extract_first()
 
@@ -101,12 +105,10 @@ def get_kills(sel, name):
 
         date = datetime.strptime(date, '%Y-%m-%d %H:%M')
 
-        # print(f'{name}({char_level}) killed {target_name}({target_level}) at {date}')
-        frag = Frag(date, target_name, target_level, frag_type)
+        frag = Frag(date, target_name, target_level, frag_type, is_kill=True)
         frag.add_killer(name, char_level)
         kills.append(frag)
 
-    print(f'{name}: {len(kills)} kills')
     return kills
 
 
@@ -119,13 +121,12 @@ def get_deaths(sel, name):
 
     for row in table.xpath(f'.//tr[td[2]/a/text()="{name}"]'):
         date = row.xpath(".//td[1]/text()").extract_first()
-        killer_name = row.xpath(f".//td[{target_column_index}]/text()").extract_first()
+        killer_name = row.xpath(f".//td[{target_column_index}]//text()").extract_first()
         killer_level = row.xpath(f".//td[{target_column_index+1}]/text()").extract_first()
 
         if row.xpath('@class') != 'h':
             if last_death and last_death.killers:
                 deaths.append(last_death)
-                # print(f'{name}({last_death.target.level}) dead by {",".join([f"{killer.name}({killer.level})" for killer in last_death.killers])} at {date}')
 
             target_level = row.xpath(".//td[3]/text()").extract_first()
 
@@ -139,16 +140,13 @@ def get_deaths(sel, name):
 
             date = datetime.strptime(date, '%Y-%m-%d %H:%M')
 
-            last_death = Frag(date, name, target_level, frag_type)
+            last_death = Frag(date, name, target_level, frag_type, is_kill=False)
 
         if killer_level and killer_name != name:
             last_death.add_killer(killer_name, killer_level)
 
     if last_death and last_death.killers:
         deaths.append(last_death)
-        # print(f'{name}({last_death.target.level}) dead by {",".join([f"{killer.name}({killer.level})" for killer in last_death.killers])} at {date}')
-
-    print(f'{name}: {len(deaths)} deaths')
 
     return deaths
 

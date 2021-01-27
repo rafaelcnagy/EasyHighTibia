@@ -36,6 +36,31 @@
                     <p class="char-info">Posição tibiaring: {{ char.ranking_position }}</p>
                 {% endif %}
             </div>
+
+            <div class="char-line">
+                <p class="char-info">{{ char.presences|length }} participações em pelegos</p>
+            </div>
+            {% for presence in char.presences %}
+                <div class="char-frags-container">
+
+                    <div class="char-line">
+                        <p class="char-info">Período: {{ presence.frags[0].date.strftime('%d/%m/%Y %H:%M') }} - {{ presence.frags[-1].date.strftime('%d/%m/%Y %H:%M') }}</p>
+                        <p class="char-info">{{ presence.qtd_kills }} kills</p>
+                        <p class="char-info">{{ presence.qtd_deaths }} mortes</p>
+                    </div>
+                    <div>
+                        {% for frag in presence.frags %}
+                            <div class="frag-line">
+                                {% if frag.is_kill %}
+                                    <p class="char-kill">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Matou o {{ frag.target.name }} [{{ frag.target.level }}]</p>
+                                {% else %}
+                                    <p class="char-death">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Morreu para o {{ frag.killers[0].name }} [{{ frag.killers[0].level }}]</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     {% endfor %}
 {% endblock %}
