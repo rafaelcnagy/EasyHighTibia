@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>Easy High</h1>
-  <p class="credit">feito por Nagy</p>
+    <h1><a class="invisible-link" href="/">Easy High</a></h1>
+    <img src="{{ url_for('static', filename='zenobra_pune.png') }}" alt="Zenobra Pune">
+    <p class="credit">feito por Nagy</p>
 {% endblock %}
 
 {% block content %}
@@ -12,5 +13,4 @@
           <button class="button" type="submit">Buscar</button>
         </form>
     </div>
-
 {% endblock %}

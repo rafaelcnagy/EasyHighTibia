@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1><a class="invisible-link" href="/">Easy High</a></h1>
-    <p class="credit">feito por Nagy</p>
+
 {% endblock %}
 
 {% block content %}
+
+    <div class="topnav">
+        <h1 style="font-size: 2rem">Easy High</h1>
+        <form action="search" style="margin:0">
+            <input type="text" placeholder="Cole a descrição aqui." name="description">
+            <button class="button" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <h2>Resultados da busca</h2>
+
     {% for char in chars %}
         <div class="char-container">
             <div class="char-line">
                 <div class="char-line">
-                    <h2 class="char-info" style="padding-right: 10px">{{ char.name }}</h2>
+                    <h3 class="char-info" style="padding-right: 10px">{{ char.name }}</h3>
                     <p class="char-info">{{ char.level }}</p>
                 </div>
                 <p class="char-info">{{ char.vocation }}</p>
