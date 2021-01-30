@@ -1,5 +1,5 @@
 # EasyHighTibia
-EasyHigh facilitate the analysis of player activity in a Tibia war team. 
+EasyHigh is a tool to assist in the analysis of player activity in a Tibia war team. 
 It was done thinking about the use of Zenobra Pune, a guild of Tibia. 
 
 Searching by the TeamSpeak description of a player, the EasyHigh search data about all the 
