@@ -74,6 +74,14 @@ input[type=text] {
   align-items: baseline;
 }
 
+.char-main-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin:0 5%;
+  width: -moz-available;
+}
+
 .char-info {
   width: max-content;
 }
@@ -138,7 +146,13 @@ input[type=text] {
   background-color: LightGray;
 }
 
-img {
+.main-logo {
   margin-inline: 40%;
   width: 20%;
+}
+
+.expand_icon {
+  width: 3%;
+  height: 3%;
+  margin: 2%
 }

@@ -58,3 +58,6 @@ class Presence:
         else:
             self.qtd_deaths = self.qtd_deaths + 1
 
+    def get_duration(self):
+        duration = self.frags[0].date - self.frags[-1].date
+        return f'{duration.seconds//3600}:{(duration.seconds%3600)//60}'

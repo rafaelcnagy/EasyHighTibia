@@ -48,16 +48,20 @@
             </div>
 
             <div class="char-line">
-                <p class="char-info">{{ char.presences|length }} participações em pelegos</p>
+                <h3 style="text-align: center; width: -moz-available">{{ char.presences|length }} participações em pelegos</h3>
             </div>
             {% for presence in char.presences %}
                 <div class="char-frags-container">
-
-                    <div class="char-line">
-                        <p class="frag-info">{{ presence.qtd_kills }} kills</p>
-                        <p class="frag-info">{{ presence.qtd_deaths }} mortes</p>
-                        <p class="frag-info">{{ presence.frags[0].date.strftime('%d/%m/%Y %H:%M') }} - {{ presence.frags[-1].date.strftime('%d/%m/%Y %H:%M') }}</p>
+                    <div style="display: flex; align-items: center">
+                        <img class="expand_icon" src="{{ url_for('static', filename='caret-down.png') }}">
+                        <div class="char-main-line">
+                            <p class="frag-info">{{ presence.qtd_kills }} kills</p>
+                            <p class="frag-info">{{ presence.qtd_deaths }} mortes</p>
+                            <p class="frag-info">{{ presence.get_duration() }} </p>
+                            <p class="frag-info">{{ presence.frags[-1].date.strftime('%d/%m/%Y') }} </p>
+                        </div>
                     </div>
+
                     <div>
                         {% for frag in presence.frags %}
                             <div class="frag-line">
