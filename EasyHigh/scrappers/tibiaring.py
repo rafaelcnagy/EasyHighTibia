@@ -7,9 +7,9 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 
-from models import Character, Frag
+from EasyHigh.models import Character, Frag
 
-from config import STEAM_ACCOUNT, STEAM_PASSWORD
+from EasyHigh.config import STEAM_ACCOUNT, STEAM_PASSWORD, SELENIUM_PATH
 
 
 def login(driver):
@@ -69,9 +69,9 @@ def initialize_driver():
         chrome_options = Options()
         chrome_options.add_argument("user-data-dir=selenium")
 
-        driver = webdriver.Chrome(chrome_options=chrome_options)
+        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=SELENIUM_PATH)
     except Exception as e:
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(executable_path=SELENIUM_PATH)
 
     driver.get('https://www.tibiaring.com')
 

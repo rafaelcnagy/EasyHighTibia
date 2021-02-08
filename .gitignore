@@ -1,6 +1,7 @@
 selenium/
-chromedriver.exe
-config.ini
+EasyHigh/selenium/
+EasyHigh/chromedriver.exe
+EasyHigh/config.ini
 *.log
 .idea/
 poetry.lock

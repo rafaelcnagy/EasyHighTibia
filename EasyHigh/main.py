@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 
-from scrappers import tibiaring, tibiadata, guildstats
-from scrappers.tibiaring import initialize_driver
-from utils import split_description, process_presences
+from EasyHigh.scrappers import tibiadata, tibiaring, guildstats
+from EasyHigh.scrappers.tibiaring import initialize_driver
+from EasyHigh.utils import split_description, process_presences
 
 app = Flask(__name__)
 
