@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 
+from EasyHigh import tests
 from EasyHigh.scrappers import tibiadata, tibiaring, guildstats
 from EasyHigh.scrappers.tibiaring import initialize_driver
 from EasyHigh.utils import split_description, process_presences
@@ -37,3 +38,8 @@ def search(ts_description):
 
     driver.close()
     return char_list
+
+
+@app.route('/test', methods=['GET'])
+def test():
+    return tests.result()
