@@ -2,7 +2,7 @@ import configparser
 import os
 
 config = configparser.ConfigParser()
-config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
+config.read(os.path.join(os.path.dirname(__file__), '../config.ini'))
 
 STEAM_ACCOUNT = config['steam']['account_name']
 STEAM_PASSWORD = config['steam']['password']
