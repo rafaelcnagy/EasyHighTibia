@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block header %}
+{% block content %}
+
     <h1><a class="invisible-link" href="/">Easy High</a></h1>
     <img class="main-logo" src="{{ url_for('static', filename='zenobra_pune.png') }}" alt="Zenobra Pune">
     <p class="credit">feito por Nagy</p>
-{% endblock %}
 
-{% block content %}
+
     <div class="search">
         <form action="search">
           <input type="text" placeholder="Cole a descrição aqui." name="description">

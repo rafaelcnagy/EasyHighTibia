@@ -79,7 +79,7 @@ input[type=text] {
   justify-content: space-between;
   align-items: baseline;
   margin:0 5%;
-  width: -moz-available;
+  width: 100%;
 }
 
 .char-info {
@@ -97,24 +97,23 @@ input[type=text] {
   background-color: slategray;
   margin: 1% 10%;
   width: 80%;
-  padding: 1%;
+  padding: 0 1%;
   border: none;
   border-radius: 1rem;
 }
 
 .char-death {
   background-color: indianred;
-  width: -moz-available;
+  width: 100%;
   margin: 0;
   padding-inline: 1%;
 }
 
 .char-kill {
   background-color: yellowgreen;
-  width: -moz-available;
+  width: 100%;
   margin: 0;
   padding-inline: 1%;
-
 }
 
 .frag-line {
@@ -122,6 +121,7 @@ input[type=text] {
   justify-content: space-between;
   align-items: baseline;
   margin: 0;
+  border: 1px solid;
 }
 
 .frag-info {
@@ -129,9 +129,8 @@ input[type=text] {
 }
 
 .invisible-link{
-  cursor: text;
-  text-decoration: none;
-  color: black;
+  color: inherit;
+  text-decoration: inherit
 }
 
 .topnav {

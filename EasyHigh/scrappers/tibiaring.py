@@ -51,7 +51,7 @@ def search_char(char: Character, driver):
 
     if sel.xpath('//div[@id="mtChar"]/div[2]/text()'):
         char.traded = True
-        char.trade_info = sel.xpath('//div[@id="mtChar"]/div[2]/text()').extract_first()
+        char.trade_info = '\n'.join(sel.xpath('//div[@id="mtChar"]/div[2]/text()').extract())
 
     if sel.xpath('//*[contains(@class, "table chartable")]'):
         char.kills = get_kills(sel, name)
