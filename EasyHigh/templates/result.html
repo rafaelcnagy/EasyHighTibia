@@ -7,7 +7,7 @@
 {% block content %}
 
     <div class="topnav">
-        <h1 style="font-size: 2rem">Easy High</h1>
+        <h1 style="font-size: 2rem"><a class="invisible-link" href="/">Easy High</a></h1>
         <form action="search" style="margin:0">
             <input type="text" placeholder="Cole a descrição aqui." name="description">
             <button class="button" type="submit">Buscar</button>
@@ -51,9 +51,12 @@
                 <h3 style="text-align: center; width: -moz-available">{{ char.presences|length }} participações em pelegos</h3>
             </div>
             {% for presence in char.presences %}
-                <div class="char-frags-container">
+
+                <div class="char-frags-container" id="char-frags">
                     <div style="display: flex; align-items: center">
-                        <img class="expand_icon" src="{{ url_for('static', filename='caret-down.png') }}">
+                        <button class="expand-button" onclick="openTab(this)">
+                            <img class="expand-icon" src="{{ url_for('static', filename='caret-down.png') }}" alt="Expandir">
+                        </button>
                         <div class="char-main-line">
                             <p class="frag-info">{{ presence.qtd_kills }} kills</p>
                             <p class="frag-info">{{ presence.qtd_deaths }} mortes</p>
@@ -62,7 +65,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="frags-tab" style="display: none">
                         {% for frag in presence.frags %}
                             <div class="frag-line">
                                 {% if frag.is_kill %}
