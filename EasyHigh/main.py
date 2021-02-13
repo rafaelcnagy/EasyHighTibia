@@ -1,19 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 
 import tests
 from scrappers import tibiadata, tibiaring, guildstats
-from scrappers.tibiaring import initialize_driver
-from utils import split_description, process_presences
+from utils import split_description, process_presences, debug_only, CharacterNotExists, InvalidDescription
 
 app = Flask(__name__)
+app.secret_key = b'^H\xec\xe3\x0b?\x8d\x934\x17\xca\xd0Z\xf0a\xc9'
 
 
 @app.route('/search', methods=['GET'])
 def search_route():
     ts_description = request.args.get('description', '')
     if ts_description:
-        chars = search(ts_description)
-        return render_template('result.html', chars=chars)
+        return search(ts_description)
     else:
         return render_template('search.html')
 
@@ -24,23 +23,37 @@ def home():
 
 
 def search(ts_description):
-    char_list = list()
-    char_name_list = split_description(ts_description)
+    try:
+        char_name_list = split_description(ts_description)
+    except InvalidDescription:
+        flash(u'Descrição inválida', 'error')
+        return render_template('search.html')
 
-    driver = initialize_driver()
+        # errors = "Descrição inválida, verifique se a descrição está correta e que você copiou a descrição inteira."
+        # return render_template('search.html', error=errors)
+
+    char_list = list()
+
+    driver = tibiaring.initialize_driver()
 
     for char_name in char_name_list:
-        char = tibiadata.search_char(char_name)
-        char = guildstats.search_char(char)
-        char = tibiaring.search_char(char, driver)
-        char = process_presences(char)
-        char_list.append(char)
-
+        try:
+            char = tibiadata.search_char(char_name)
+            char = guildstats.search_char(char)
+            char = tibiaring.search_char(char, driver)
+            char = process_presences(char)
+            char_list.append(char)
+        except CharacterNotExists:
+            flash(f'O character {char_name} não existe!', 'warning')
+        except Exception as e:
+            flash(f'Aconteceu um erro na busca do char {char_name}, por favor, tente novamente ou entre em contato com um administrador.\nError: {e}', 'error')
     driver.close()
-    return char_list
+
+    return render_template('result.html', chars=char_list)
 
 
 @app.route('/test', methods=['GET'])
+@debug_only
 def test():
     return tests.result()
 

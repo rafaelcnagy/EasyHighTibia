@@ -32,6 +32,12 @@ def search_char(char: Character, driver):
 
     url = f'https://www.tibiaring.com/char.php?c={name.replace(" ", "+")}&lang=pt'
     driver.get(url)
+
+    wait = WebDriverWait(driver, 10)
+    wait.until(lambda _driver: _driver.find_element_by_xpath('//*[@id="char"]')
+                               or _driver.find_element_by_xpath('//*[@class="flex ja indexshow"]'))
+
+    ''
     if driver.find_elements_by_id('CookieAlertClose'):
         driver.find_element_by_id('CookieAlertClose').click()
     try:
