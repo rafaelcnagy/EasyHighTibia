@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
 
-from EasyHigh import tests
-from EasyHigh.scrappers import tibiadata, tibiaring, guildstats
-from EasyHigh.scrappers.tibiaring import initialize_driver
-from EasyHigh.utils import split_description, process_presences
+import tests
+from scrappers import tibiadata, tibiaring, guildstats
+from scrappers.tibiaring import initialize_driver
+from utils import split_description, process_presences
 
 app = Flask(__name__)
 
@@ -43,3 +43,7 @@ def search(ts_description):
 @app.route('/test', methods=['GET'])
 def test():
     return tests.result()
+
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=80, debug=False)

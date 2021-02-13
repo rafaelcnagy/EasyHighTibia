@@ -7,9 +7,9 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 
-from EasyHigh.models import Character, Frag
+from models import Character, Frag
 
-from EasyHigh.config import STEAM_ACCOUNT, STEAM_PASSWORD, SELENIUM_PATH
+from config import STEAM_ACCOUNT, STEAM_PASSWORD, SELENIUM_PATH
 
 
 def login(driver):
@@ -67,6 +67,9 @@ def search_char(char: Character, driver):
 def initialize_driver():
     try:
         chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument("user-data-dir=selenium")
 
         driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=SELENIUM_PATH)

@@ -3,8 +3,8 @@ from datetime import datetime
 
 from flask import render_template
 
-from EasyHigh.models import Character, Frag
-from EasyHigh.utils import process_presences
+from models import Character, Frag
+from utils import process_presences
 
 
 def result():

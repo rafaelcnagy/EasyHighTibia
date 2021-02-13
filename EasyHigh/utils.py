@@ -1,7 +1,7 @@
 import re
 import datetime
 
-from EasyHigh.models import Presence
+from models import Presence
 
 
 def split_description(ts_description):

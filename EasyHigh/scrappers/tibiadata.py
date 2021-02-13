@@ -1,6 +1,6 @@
 import requests
 
-from EasyHigh.models import Character
+from models import Character
 
 
 def search_char(name):
