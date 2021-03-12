@@ -23,7 +23,7 @@ def login(driver):
     driver.find_element_by_id("steamAccountName").send_keys(STEAM_ACCOUNT)
     driver.find_element_by_id("steamPassword").send_keys(STEAM_PASSWORD)
     driver.find_element_by_id("imageLogin").click()
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 60)
     wait.until(lambda _driver: _driver.current_url.startswith("https://www.tibiaring.com"))
 
 
