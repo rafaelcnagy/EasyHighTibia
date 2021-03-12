@@ -1,9 +1,9 @@
-from datetime import datetime
+import datetime
 
 
 class Character:
-    def __init__(self, name, json):
-        self.name = name
+    def __init__(self, json):
+        self.name = json['name'].split(' (')[0]
         self.level = json['level']
         self.vocation = json['vocation']
         self.world = json['world']
@@ -13,7 +13,7 @@ class Character:
         self.traded = False
         self.trade_info = None
 
-        self.last_login = datetime.strptime(json['last_login'][0]['date'], '%Y-%m-%d %H:%M:%S.%f')
+        self.last_login = datetime.datetime.strptime(json['last_login'][0]['date'], '%Y-%m-%d %H:%M:%S.%f')
         self.online_time = None
 
         self.ranking_position = 0
@@ -22,6 +22,26 @@ class Character:
         self.deaths = list()
         self.frags = list()
         self.presences = list()
+        self.last_month_presences = list()
+
+    def process_presences(self):
+        if len(self.frags) > 0:
+            this_participation = Presence(self.frags[0])
+            for frag in self.frags[1:]:
+                if this_participation.frags[-1].date - frag.date < datetime.timedelta(minutes=30):
+                    this_participation.add_frag(frag)
+                else:
+                    self.presences.append(this_participation)
+                    this_participation = Presence(frag)
+
+            self.presences.append(this_participation)
+
+        now = datetime.datetime.now()
+        for presence in self.presences:
+            if now - presence.frags[-1].date <= datetime.timedelta(days=30):
+                self.last_month_presences.append(presence)
+            else:
+                break
 
 
 class Frag:
@@ -60,4 +80,4 @@ class Presence:
 
     def get_duration(self):
         duration = self.frags[0].date - self.frags[-1].date
-        return f'{duration.seconds//3600}:{(duration.seconds%3600)//60}'
+        return f'{str(duration.seconds//3600).zfill(2)}:{str((duration.seconds%3600)//60).zfill(2)}'

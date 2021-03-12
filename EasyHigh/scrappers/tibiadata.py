@@ -12,5 +12,5 @@ def search_char(name):
     if 'error' in json['characters']:
         raise CharacterNotExists
 
-    char = Character(name, json['characters']['data'])
+    char = Character(json['characters']['data'])
     return char

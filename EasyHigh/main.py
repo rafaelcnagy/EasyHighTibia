@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, flash
 
 import tests
 from scrappers import tibiadata, tibiaring, guildstats
-from utils import split_description, process_presences, debug_only, CharacterNotExists, InvalidDescription
+from utils import split_description, debug_only, CharacterNotExists, InvalidDescription
 
 app = Flask(__name__)
 app.secret_key = b'^H\xec\xe3\x0b?\x8d\x934\x17\xca\xd0Z\xf0a\xc9'
@@ -34,14 +34,18 @@ def search(ts_description):
 
     char_list = list()
 
-    driver = tibiaring.initialize_driver()
+    try:
+        driver = tibiaring.initialize_driver()
+    except Exception as e:
+        flash(f'Erro ao executar a busca, por favor, tente novamente ou entre em contato com um administrador.\nError: {e}', 'error')
+        return render_template('search.html')
 
     for char_name in char_name_list:
         try:
             char = tibiadata.search_char(char_name)
             char = guildstats.search_char(char)
             char = tibiaring.search_char(char, driver)
-            char = process_presences(char)
+            char.process_presences()
             char_list.append(char)
         except CharacterNotExists:
             flash(f'O character {char_name} não existe!', 'warning')
@@ -53,10 +57,9 @@ def search(ts_description):
 
 
 @app.route('/test', methods=['GET'])
-@debug_only
 def test():
     return tests.result()
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=80, debug=False)
+    app.run(host='127.0.0.1', port=80, debug=True)

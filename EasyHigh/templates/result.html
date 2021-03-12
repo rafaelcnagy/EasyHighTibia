@@ -2,6 +2,7 @@
 
 {% block head %}
     <script src="{{ url_for('static', filename='expander.js') }}"></script>
+    <script src="{{ url_for('static', filename='date_filter.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +15,16 @@
         </form>
     </div>
 
-    <h2>Resultados da busca</h2>
+    <div class="title-container">
+        <h2 style="width: 100%; margin-right: -14%">Resultados da busca</h2>
+        <div>
+            <p style="text-align: center; font-size:1.4rem; margin-bottom: 5%">Filtrar data:</p>
+            <select name="date-filter" id="date-filter" onchange="filterDate(this)">
+              <option value="last month">Último mês</option>
+              <option value="all time">Desde sempre</option>
+            </select>
+        </div>
+    </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -30,8 +40,8 @@
         <div class="char-container">
             <div class="char-line">
                 <div class="char-line">
-                    <h3 class="char-info" style="padding-right: 10px">{{ char.name }}</h3>
-                    <p class="char-info">{{ char.level }}</p>
+                    <p class="char-info" style="font-size: 1.5rem">{{ char.level }}</p>
+                    <h3 class="char-info" style="margin-left: 3rem">{{ char.name }}</h3>
                 </div>
                 <p class="char-info">{{ char.vocation }}</p>
                 <p class="char-info">{{ char.world }}</p>
@@ -57,37 +67,71 @@
                 {% endif %}
             </div>
 
-            <div class="char-line">
-                <h3 style="text-align: center; width: -moz-available">{{ char.presences|length }} participações em pelegos</h3>
-            </div>
-            {% for presence in char.presences %}
+            <div class="last-presences">
+                <div class="char-line">
+                    <h3 style="text-align: center; width: 100%">{{ char.last_month_presences|length }} participações em pelegos no último mês</h3>
+                </div>
+                {% for presence in char.last_month_presences %}
+                    <div class="char-frags-container" id="char-frags">
+                        <div style="display: flex; align-items: center">
+                            <button class="expand-button" onclick="openTab(this)">
+                                <img class="expand-icon" src="{{ url_for('static', filename='caret-down.png') }}" alt="Expandir">
+                            </button>
+                            <div class="char-main-line">
+                                <p class="frag-info">{{ presence.qtd_kills }} kills</p>
+                                <p class="frag-info">{{ presence.qtd_deaths }} mortes</p>
+                                <p class="frag-info">{{ presence.get_duration() }} </p>
+                                <p class="frag-info">{{ presence.frags[-1].date.strftime('%d/%m/%Y') }} </p>
+                            </div>
+                        </div>
 
-                <div class="char-frags-container" id="char-frags">
-                    <div style="display: flex; align-items: center">
-                        <button class="expand-button" onclick="openTab(this)">
-                            <img class="expand-icon" src="{{ url_for('static', filename='caret-down.png') }}" alt="Expandir">
-                        </button>
-                        <div class="char-main-line">
-                            <p class="frag-info">{{ presence.qtd_kills }} kills</p>
-                            <p class="frag-info">{{ presence.qtd_deaths }} mortes</p>
-                            <p class="frag-info">{{ presence.get_duration() }} </p>
-                            <p class="frag-info">{{ presence.frags[-1].date.strftime('%d/%m/%Y') }} </p>
+                        <div class="frags-tab" style="display: none">
+                            {% for frag in presence.frags %}
+                                <div class="frag-line">
+                                    {% if frag.is_kill %}
+                                        <p class="char-kill">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Matou o {{ frag.target.name }} [{{ frag.target.level }}]</p>
+                                    {% else %}
+                                        <p class="char-death">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Morreu para o {{ frag.killers[0].name }} [{{ frag.killers[0].level }}]</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
+                {% endfor %}
+            </div>
 
-                    <div class="frags-tab" style="display: none">
-                        {% for frag in presence.frags %}
-                            <div class="frag-line">
-                                {% if frag.is_kill %}
-                                    <p class="char-kill">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Matou o {{ frag.target.name }} [{{ frag.target.level }}]</p>
-                                {% else %}
-                                    <p class="char-death">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Morreu para o {{ frag.killers[0].name }} [{{ frag.killers[0].level }}]</p>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    </div>
+            <div class="all-presences" style="display: none">
+                <div class="char-line">
+                    <h3 style="text-align: center; width: 100%">{{ char.presences|length }} participações em pelegos desde a criação do char</h3>
                 </div>
-            {% endfor %}
+                {% for presence in char.presences %}
+                    <div class="char-frags-container" id="char-frags">
+                        <div style="display: flex; align-items: center">
+                            <button class="expand-button" onclick="openTab(this)">
+                                <img class="expand-icon" src="{{ url_for('static', filename='caret-down.png') }}" alt="Expandir">
+                            </button>
+                            <div class="char-main-line">
+                                <p class="frag-info">{{ presence.qtd_kills }} kills</p>
+                                <p class="frag-info">{{ presence.qtd_deaths }} mortes</p>
+                                <p class="frag-info">{{ presence.get_duration() }} </p>
+                                <p class="frag-info">{{ presence.frags[-1].date.strftime('%d/%m/%Y') }} </p>
+                            </div>
+                        </div>
+
+                        <div class="frags-tab" style="display: none">
+                            {% for frag in presence.frags %}
+                                <div class="frag-line">
+                                    {% if frag.is_kill %}
+                                        <p class="char-kill">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Matou o {{ frag.target.name }} {{ frag.target.level }}</p>
+                                    {% else %}
+                                        <p class="char-death">{{ frag.date.strftime('%d/%m/%Y %H:%M') }} - Morreu para o {{ frag.killers[0].name }} {{ frag.killers[0].level }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     {% endfor %}
 {% endblock %}
