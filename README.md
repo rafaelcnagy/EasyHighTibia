@@ -3,7 +3,7 @@ EasyHigh is a tool to assist in the analysis of player activity in a Tibia war t
 It was done thinking about the use of Zenobra Pune, a guild of Tibia. 
 
 Searching by the TeamSpeak description of a player, the EasyHigh search data about all the 
-player's characters in differents sources and joins that in a single page.
+player's characters in differents sources and joins that in a single page. [This is an example of the result page.](https://rafaelcnagy.github.io/EasyHighTibia/example)
 
 It was made using *flask*, *selenium* and *requests*.
 
